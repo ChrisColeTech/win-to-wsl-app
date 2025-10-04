@@ -17,15 +17,10 @@
   "files": [
     "electron/dist/**/*",
     "electron/assets/**/*",
-    "electron/package.json"
+    "electron/package.json",
+    "frontend/dist/**/*"
   ],
   "includeSubNodeModules": true,
-  "extraResources": [
-    {
-      "from": "frontend/dist",
-      "to": "frontend/dist"
-    }
-  ],
   "extraMetadata": {
     "main": "electron/dist/main.js"
   },
