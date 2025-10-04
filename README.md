@@ -1,73 +1,176 @@
-# React + TypeScript + Vite
+# Win to WSL
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A lightweight Electron-based desktop application for seamless path conversion between Windows, WSL, and MSYS formats.
 
-Currently, two official plugins are available:
+![Version](https://img.shields.io/badge/version-2.0.0-blue)
+![License](https://img.shields.io/badge/license-MIT-green)
+![Platform](https://img.shields.io/badge/platform-Windows-lightgrey)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Features
 
-## React Compiler
+- **Multi-Format Path Conversion**: Convert paths between Windows, WSL (Windows Subsystem for Linux), and MSYS formats
+- **Smart Path Detection**: Automatically detects the input path format
+- **Clipboard Integration**: Quick copy/paste functionality for all path formats
+- **Path History**: Remembers recently converted paths with usage tracking
+- **System Tray Integration**: Minimizes to tray for quick access
+- **Frameless Custom Window**: Modern, VS Code-style interface
+- **Dark/Light Theme**: Toggle between themes with a single click
+- **Persistent Storage**: Path history saved using electron-store
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Tech Stack
 
-## Expanding the ESLint configuration
+- **Frontend**: React 18 + TypeScript + Vite
+- **UI Framework**: Tailwind CSS + shadcn/ui
+- **Desktop**: Electron 27
+- **State Management**: React Context API
+- **Icons**: React Icons
+- **Storage**: electron-store
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## Installation
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+### Prerequisites
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+- Node.js 18+ and npm
+- Windows with WSL installed (for full functionality)
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+### Development
+
+```bash
+# Clone the repository
+git clone https://github.com/ChrisColeTech/win-to-wsl-app.git
+cd win-to-wsl-app
+
+# Install dependencies
+npm install
+
+# Start development server
+npm run dev
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+The app will start with hot-reload enabled. The frontend runs on port 5173, and Electron loads it automatically.
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+### Build
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+# Build for production
+npm run build
+
+# Create distributable packages
+npm run dist          # Build for current platform
+npm run dist:win      # Build for Windows
+npm run dist:mac      # Build for macOS
+npm run dist:linux    # Build for Linux
 ```
+
+Built applications will be in the `dist/` directory.
+
+## Usage
+
+1. **Input Path**: Enter or paste any Windows, WSL, or MSYS path
+2. **Auto-Detection**: The app automatically detects your input format
+3. **View Conversions**: See all format conversions instantly
+4. **Copy Paths**: Click copy buttons to copy any format to clipboard
+5. **Path History**: Click the input field to see recent paths
+
+### Path Format Examples
+
+- **Windows**: `C:\Users\YourName\Documents\project`
+- **WSL**: `/mnt/c/Users/YourName/Documents/project`
+- **MSYS**: `/c/Users/YourName/Documents/project`
+
+## Architecture
+
+### Project Structure
+
+```
+win-to-wsl-app/
+├── electron/              # Electron main process
+│   ├── src/
+│   │   ├── main.ts       # Main process entry
+│   │   └── preload.ts    # Preload script
+│   └── assets/           # App icons
+├── frontend/             # React frontend
+│   ├── src/
+│   │   ├── components/   # React components
+│   │   ├── hooks/        # Custom hooks
+│   │   ├── services/     # Path conversion logic
+│   │   └── contexts/     # React contexts
+│   └── public/           # Static assets
+├── electron-builder.json # Build configuration
+└── package.json          # Root package config
+```
+
+### Key Components
+
+- **ConverterPanel**: Main UI panel with input/output sections
+- **PathHistoryInput**: Custom dropdown for path history
+- **TitleBar**: Custom frameless window controls
+- **ThemeContext**: Dark/light theme management
+
+### IPC Communication
+
+The app uses Electron IPC for:
+- Clipboard operations (`clipboard:read`, `clipboard:write`)
+- Path history management (`history:read`, `history:add`, `history:clear`)
+- Window controls (`window:minimize`, `window:maximize`, `window:close`)
+
+## Configuration
+
+### Window Settings
+
+Default window configuration in `electron/src/main.ts`:
+
+```typescript
+{
+  width: 800,
+  height: 364,
+  minWidth: 600,
+  minHeight: 364,
+  maxHeight: 364,
+  resizable: true,  // Horizontal resize only
+  frame: false      // Custom title bar
+}
+```
+
+### Build Settings
+
+Platform-specific icons and build targets in `electron-builder.json`.
+
+## Development
+
+### Available Scripts
+
+```bash
+npm run dev           # Start dev server (frontend + electron)
+npm run build         # Build frontend and electron
+npm run lint          # Run ESLint
+npm run dist          # Create distributable
+```
+
+### Workspace Structure
+
+This project uses npm workspaces:
+- `frontend/` - React application workspace
+- `electron/` - Electron main process workspace
+
+## Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.
+
+## License
+
+MIT License - see LICENSE file for details
+
+## Acknowledgments
+
+- Built with [Electron](https://www.electronjs.org/)
+- UI components from [shadcn/ui](https://ui.shadcn.com/)
+- Icons from [React Icons](https://react-icons.github.io/react-icons/)
+
+## Support
+
+For issues, questions, or contributions, please visit the [GitHub repository](https://github.com/ChrisColeTech/win-to-wsl-app).
+
+---
+
+Made with ❤️ for Windows + WSL developers
