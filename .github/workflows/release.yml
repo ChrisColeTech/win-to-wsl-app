@@ -49,7 +49,7 @@ jobs:
 
     strategy:
       matrix:
-        os: [windows-latest]
+        os: [windows-latest, macos-latest]
 
     steps:
       - name: Checkout code
@@ -72,15 +72,32 @@ jobs:
         id: build_number
         run: echo "BUILD_NUMBER=${{ github.run_number }}" >> $GITHUB_ENV
 
-      - name: Build and publish release
+      - name: Build and publish release (Windows)
+        if: matrix.os == 'windows-latest'
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           BUILD_NUMBER: ${{ github.run_number }}
         run: npm run dist:win
 
-      - name: Upload artifacts
+      - name: Build and publish release (macOS)
+        if: matrix.os == 'macos-latest'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          BUILD_NUMBER: ${{ github.run_number }}
+        run: npm run dist:mac
+
+      - name: Upload artifacts (Windows)
+        if: matrix.os == 'windows-latest'
         uses: actions/upload-artifact@v4
         with:
           name: release-windows
           path: dist/*.exe
+          retention-days: 5
+
+      - name: Upload artifacts (macOS)
+        if: matrix.os == 'macos-latest'
+        uses: actions/upload-artifact@v4
+        with:
+          name: release-macos
+          path: dist/*.dmg
           retention-days: 5
