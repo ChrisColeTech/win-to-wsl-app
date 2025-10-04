@@ -27,7 +27,7 @@ export function TitleBar() {
   return (
     <div className="h-8 bg-card border-b border-border flex items-center justify-between flex-shrink-0" style={{ WebkitAppRegion: 'drag' } as React.CSSProperties}>
       <div className="flex items-center gap-2 px-3">
-        <img src="/icon-32.png" alt="Win to WSL" className="w-4 h-4" />
+        <img src="./icon-32.png" alt="Win to WSL" className="w-4 h-4" />
         <h1 className="text-sm font-semibold">Win to WSL</h1>
       </div>
       <div className="flex items-center" style={{ WebkitAppRegion: 'no-drag' } as React.CSSProperties}>
