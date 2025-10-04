@@ -66,44 +66,37 @@ Built applications will be in the `dist/` directory.
 
 ## Releases
 
-This project uses GitHub Actions for automated releases with build number tracking:
+This project uses **automatic versioning** - every push to master creates a new release!
 
-### Creating a Release
+### How It Works
 
-Use the built-in npm version scripts:
+1. **Push to master**: Any commit pushed to the master branch
+2. **Auto-version bump**: GitHub Actions automatically bumps the patch version
+3. **Create tag**: Creates a git tag (e.g., v1.0.1)
+4. **Build & Release**: Builds installers for Windows, macOS, and Linux
+5. **Publish**: Publishes to GitHub Releases automatically
+
+### Manual Version Control (Optional)
+
+If you want to control the version bump type:
 
 ```bash
-# Patch release (1.0.0 -> 1.0.1)
+# Patch release (1.0.0 -> 1.0.1) - Default on every push
 npm run release:patch
 
-# Minor release (1.0.0 -> 1.1.0)
+# Minor release (1.0.0 -> 1.1.0) - New features
 npm run release:minor
 
-# Major release (1.0.0 -> 2.0.0)
+# Major release (1.0.0 -> 2.0.0) - Breaking changes
 npm run release:major
-```
-
-These commands will:
-1. Bump the version in package.json
-2. Create a git commit and tag
-3. Push to GitHub
-4. Trigger the automated build workflow
-
-### Manual Release
-
-Alternatively, create and push a tag manually:
-```bash
-git tag v1.0.0
-git push origin v1.0.0
 ```
 
 ### Build Metadata
 
 Each build includes:
-- **Version**: From package.json (e.g., 1.0.0)
-- **Build Number**: GitHub Actions run number (auto-incremented)
-- The workflow automatically builds for Windows, macOS, and Linux
-- Installers are published to the GitHub Releases page
+- **Version**: Auto-incremented patch version
+- **Build Number**: GitHub Actions run number
+- **Platforms**: Windows (NSIS + Portable), macOS (DMG + ZIP), Linux (AppImage + DEB)
 
 Download the latest release from the [Releases page](https://github.com/ChrisColeTech/win-to-wsl-app/releases).
 
