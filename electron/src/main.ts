@@ -1,5 +1,6 @@
 import { app, BrowserWindow, ipcMain, clipboard, Tray, Menu, nativeImage } from 'electron';
 import * as path from 'path';
+import * as url from 'url';
 import Store from 'electron-store';
 
 let mainWindow: BrowserWindow | null = null;
@@ -44,8 +45,24 @@ const createWindow = () => {
     mainWindow.loadURL('http://localhost:5173');
     mainWindow.webContents.openDevTools();
   } else {
-    // In production, frontend is bundled in app.asar
-    mainWindow.loadFile(path.join(__dirname, '../../frontend/dist/index.html'));
+    // In production, load from bundled files
+    // Debug logging
+    console.log('app.isPackaged:', app.isPackaged);
+    console.log('__dirname:', __dirname);
+    console.log('process.resourcesPath:', process.resourcesPath);
+    console.log('app.getAppPath():', app.getAppPath());
+
+    const indexPath = path.join(__dirname, '../../frontend/dist/index.html');
+    console.log('Attempting to load:', indexPath);
+
+    const fileUrl = url.format({
+      pathname: indexPath,
+      protocol: 'file:',
+      slashes: true,
+    });
+    console.log('File URL:', fileUrl);
+
+    mainWindow.loadURL(fileUrl);
   }
 
   return mainWindow;
