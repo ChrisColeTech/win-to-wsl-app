@@ -17,9 +17,9 @@
   "files": [
     "electron/dist/**/*",
     "electron/assets/**/*",
-    "electron/package.json",
-    "electron/node_modules/**/*"
+    "electron/package.json"
   ],
+  "includeSubNodeModules": true,
   "extraResources": [
     {
       "from": "frontend/dist",
