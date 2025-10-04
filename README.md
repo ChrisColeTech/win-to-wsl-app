@@ -4,7 +4,7 @@ A lightweight Electron-based desktop application for seamless path conversion be
 
 ![Version](https://img.shields.io/badge/version-2.0.0-blue)
 ![License](https://img.shields.io/badge/license-MIT-green)
-![Platform](https://img.shields.io/badge/platform-Windows-lightgrey)
+![Platform](https://img.shields.io/badge/platform-Windows%20%7C%20macOS-lightgrey)
 
 ## Features
 
@@ -26,7 +26,38 @@ A lightweight Electron-based desktop application for seamless path conversion be
 - **Icons**: React Icons
 - **Storage**: electron-store
 
-## Installation
+## Download & Install
+
+### For End Users
+
+Download the latest release from the [Releases page](https://github.com/ChrisColeTech/win-to-wsl-app/releases).
+
+#### Windows
+
+1. Download `Win-to-WSL-Setup-X.X.X.exe`
+2. Run the installer
+3. **Security Warning**: You'll see a Windows SmartScreen warning because the app is not yet code-signed with an EV certificate
+   - Click **"More info"**
+   - Click **"Run anyway"**
+   - This is a one-time warning - the installed app runs normally after installation
+4. The app will be installed and can be launched from the Start Menu
+
+#### macOS
+
+1. Download `Win-to-WSL-X.X.X.dmg`
+2. Open the DMG and drag the app to Applications
+3. **Security Warning**: macOS will block the app because it's not yet code-signed with an Apple Developer certificate
+   - Open **Terminal** and run:
+     ```bash
+     xattr -cr "/Applications/Win to WSL.app"
+     ```
+   - This removes the quarantine flag and allows the app to run
+   - You only need to do this once
+4. Launch the app from Applications
+
+> **Note**: These security warnings are normal for unsigned applications. We're working on obtaining code signing certificates to eliminate these warnings in future releases.
+
+## Development Setup
 
 ### Prerequisites
 
@@ -96,9 +127,7 @@ npm run release:major
 Each build includes:
 - **Version**: Auto-incremented patch version
 - **Build Number**: GitHub Actions run number
-- **Platforms**: Windows (NSIS + Portable), macOS (DMG + ZIP), Linux (AppImage + DEB)
-
-Download the latest release from the [Releases page](https://github.com/ChrisColeTech/win-to-wsl-app/releases).
+- **Platforms**: Windows (NSIS), macOS (DMG + ZIP)
 
 ## Usage
 
