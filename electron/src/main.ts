@@ -46,23 +46,16 @@ const createWindow = () => {
     mainWindow.webContents.openDevTools();
   } else {
     // In production, load from bundled files
-    // Debug logging
-    console.log('app.isPackaged:', app.isPackaged);
-    console.log('__dirname:', __dirname);
-    console.log('process.resourcesPath:', process.resourcesPath);
+    const indexPath = path.join(app.getAppPath(), 'frontend/dist/index.html');
+
+    console.log('Production mode - loading frontend');
     console.log('app.getAppPath():', app.getAppPath());
+    console.log('Loading index from:', indexPath);
 
-    const indexPath = path.join(__dirname, '../../frontend/dist/index.html');
-    console.log('Attempting to load:', indexPath);
+    mainWindow.loadFile(indexPath);
 
-    const fileUrl = url.format({
-      pathname: indexPath,
-      protocol: 'file:',
-      slashes: true,
-    });
-    console.log('File URL:', fileUrl);
-
-    mainWindow.loadURL(fileUrl);
+    // Open DevTools to see any errors
+    mainWindow.webContents.openDevTools();
   }
 
   return mainWindow;
