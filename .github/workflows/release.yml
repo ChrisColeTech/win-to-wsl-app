@@ -63,10 +63,7 @@ jobs:
           node-version: '20'
 
       - name: Install dependencies
-        run: |
-          npm install
-          cd frontend && npm install
-          cd ../electron && npm install
+        run: npm install --force
 
       - name: Build application
         run: npm run build
