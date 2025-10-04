@@ -30,16 +30,22 @@ jobs:
       - name: Build application
         run: npm run build
 
+      - name: Set build number
+        id: build_number
+        run: echo "BUILD_NUMBER=${{ github.run_number }}" >> $GITHUB_ENV
+
       - name: Build and publish release (Windows)
         if: matrix.os == 'windows-latest'
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          BUILD_NUMBER: ${{ github.run_number }}
         run: npm run dist:win
 
       - name: Build and publish release (macOS)
         if: matrix.os == 'macos-latest'
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          BUILD_NUMBER: ${{ github.run_number }}
           # macOS code signing (optional, uncomment if you have certificates)
           # CSC_LINK: ${{ secrets.MAC_CERTS }}
           # CSC_KEY_PASSWORD: ${{ secrets.MAC_CERTS_PASSWORD }}
@@ -49,6 +55,7 @@ jobs:
         if: matrix.os == 'ubuntu-latest'
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          BUILD_NUMBER: ${{ github.run_number }}
         run: npm run dist:linux
 
       - name: Upload artifacts

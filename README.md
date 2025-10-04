@@ -66,17 +66,44 @@ Built applications will be in the `dist/` directory.
 
 ## Releases
 
-This project uses GitHub Actions for automated releases:
+This project uses GitHub Actions for automated releases with build number tracking:
 
-1. **Create a version tag**:
-   ```bash
-   git tag v1.0.0
-   git push origin v1.0.0
-   ```
+### Creating a Release
 
-2. **Automated build**: The workflow automatically builds for Windows, macOS, and Linux
+Use the built-in npm version scripts:
 
-3. **GitHub Release**: Installers are published to the GitHub Releases page
+```bash
+# Patch release (1.0.0 -> 1.0.1)
+npm run release:patch
+
+# Minor release (1.0.0 -> 1.1.0)
+npm run release:minor
+
+# Major release (1.0.0 -> 2.0.0)
+npm run release:major
+```
+
+These commands will:
+1. Bump the version in package.json
+2. Create a git commit and tag
+3. Push to GitHub
+4. Trigger the automated build workflow
+
+### Manual Release
+
+Alternatively, create and push a tag manually:
+```bash
+git tag v1.0.0
+git push origin v1.0.0
+```
+
+### Build Metadata
+
+Each build includes:
+- **Version**: From package.json (e.g., 1.0.0)
+- **Build Number**: GitHub Actions run number (auto-incremented)
+- The workflow automatically builds for Windows, macOS, and Linux
+- Installers are published to the GitHub Releases page
 
 Download the latest release from the [Releases page](https://github.com/ChrisColeTech/win-to-wsl-app/releases).
 

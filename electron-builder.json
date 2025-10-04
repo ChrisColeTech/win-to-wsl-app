@@ -1,6 +1,7 @@
 {
   "appId": "com.pathconverter.app",
   "productName": "Win to WSL",
+  "buildVersion": "${env.BUILD_NUMBER}",
   "directories": {
     "output": "dist",
     "buildResources": "electron/assets"
