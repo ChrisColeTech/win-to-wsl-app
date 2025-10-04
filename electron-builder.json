@@ -6,11 +6,14 @@
     "output": "dist",
     "buildResources": "electron/assets"
   },
-  "publish": {
-    "provider": "github",
-    "owner": "ChrisColeTech",
-    "repo": "win-to-wsl-app"
-  },
+  "publish": [
+    {
+      "provider": "github",
+      "owner": "ChrisColeTech",
+      "repo": "win-to-wsl-app",
+      "releaseType": "release"
+    }
+  ],
   "files": [
     "electron/dist/**/*",
     "electron/assets/**/*"
