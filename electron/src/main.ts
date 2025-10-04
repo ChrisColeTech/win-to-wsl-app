@@ -47,15 +47,7 @@ const createWindow = () => {
   } else {
     // In production, load from bundled files
     const indexPath = path.join(app.getAppPath(), 'frontend/dist/index.html');
-
-    console.log('Production mode - loading frontend');
-    console.log('app.getAppPath():', app.getAppPath());
-    console.log('Loading index from:', indexPath);
-
     mainWindow.loadFile(indexPath);
-
-    // Open DevTools to see any errors
-    mainWindow.webContents.openDevTools();
   }
 
   return mainWindow;
