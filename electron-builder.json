@@ -25,6 +25,8 @@
     "main": "electron/dist/main.js"
   },
   "win": {
+    "certificateFile": "scripts/code-signing-cert.pfx",
+    "certificatePassword": "win-2-wsl-v2",
     "target": [
       {
         "target": "nsis",
