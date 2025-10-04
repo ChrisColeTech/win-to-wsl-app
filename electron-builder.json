@@ -11,9 +11,14 @@
     "repo": "win-to-wsl-app"
   },
   "files": [
-    "frontend/dist/**/*",
     "electron/dist/**/*",
     "electron/assets/**/*"
+  ],
+  "extraResources": [
+    {
+      "from": "frontend/dist",
+      "to": "frontend/dist"
+    }
   ],
   "extraMetadata": {
     "main": "electron/dist/main.js"

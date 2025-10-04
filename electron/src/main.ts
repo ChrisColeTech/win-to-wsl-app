@@ -44,7 +44,8 @@ const createWindow = () => {
     mainWindow.loadURL('http://localhost:5173');
     mainWindow.webContents.openDevTools();
   } else {
-    mainWindow.loadFile(path.join(__dirname, '../../frontend/dist/index.html'));
+    // In production, frontend is in extraResources
+    mainWindow.loadFile(path.join(process.resourcesPath, 'frontend/dist/index.html'));
   }
 
   return mainWindow;
