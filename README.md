@@ -64,6 +64,22 @@ npm run dist:linux    # Build for Linux
 
 Built applications will be in the `dist/` directory.
 
+## Releases
+
+This project uses GitHub Actions for automated releases:
+
+1. **Create a version tag**:
+   ```bash
+   git tag v1.0.0
+   git push origin v1.0.0
+   ```
+
+2. **Automated build**: The workflow automatically builds for Windows, macOS, and Linux
+
+3. **GitHub Release**: Installers are published to the GitHub Releases page
+
+Download the latest release from the [Releases page](https://github.com/ChrisColeTech/win-to-wsl-app/releases).
+
 ## Usage
 
 1. **Input Path**: Enter or paste any Windows, WSL, or MSYS path

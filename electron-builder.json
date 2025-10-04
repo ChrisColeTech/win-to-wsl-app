@@ -2,8 +2,13 @@
   "appId": "com.pathconverter.app",
   "productName": "Win to WSL",
   "directories": {
-    "output": "dist-electron",
+    "output": "dist",
     "buildResources": "electron/assets"
+  },
+  "publish": {
+    "provider": "github",
+    "owner": "ChrisColeTech",
+    "repo": "win-to-wsl-app"
   },
   "files": [
     "frontend/dist/**/*",
