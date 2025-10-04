@@ -34,6 +34,9 @@
     "msys",
     "developer-tools"
   ],
-  "author": "ChrisColeTech",
+  "author": {
+    "name": "ChrisColeTech",
+    "email": "chris@chriscoletech.com"
+  },
   "license": "MIT"
 }
