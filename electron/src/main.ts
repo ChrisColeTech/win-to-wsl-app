@@ -15,6 +15,7 @@ const createWindow = () => {
     maxHeight: 364,
     resizable: true, // Allow horizontal resize only
     frame: false, // Hide native title bar
+    icon: path.join(__dirname, '../assets/icons/png/256x256.png'),
     webPreferences: {
       preload: path.join(__dirname, 'preload.js'),
       contextIsolation: true,
